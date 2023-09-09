@@ -2,12 +2,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Login</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<form action="ControlServlet" method="get">
+    <div>
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required>
+    </div>
+
+    <div>
+        <label for="password">Mật khẩu:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+
+    <div>
+        <input type="submit" value="Đăng nhập">
+    </div>
+</form>
 </body>
 </html>

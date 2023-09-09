@@ -2,9 +2,16 @@ package com.example.labweek01.models;
 
 public class Log {
     private String id;
-    private String accountID;
+    private Account accountID;
     private String loginTime;
     private String notes;
+
+    public Log(String id, Account accountID, String loginTime, String notes) {
+        this.id = id;
+        this.accountID = accountID;
+        this.loginTime = loginTime;
+        this.notes = notes;
+    }
 
     public String getId() {
         return id;
@@ -14,11 +21,11 @@ public class Log {
         this.id = id;
     }
 
-    public String getAccountID() {
+    public Account getAccountID() {
         return accountID;
     }
 
-    public void setAccountID(String accountID) {
+    public void setAccountID(Account accountID) {
         this.accountID = accountID;
     }
 
@@ -36,15 +43,5 @@ public class Log {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public Log(String id, String accountID, String loginTime, String notes) {
-        this.id = id;
-        this.accountID = accountID;
-        this.loginTime = loginTime;
-        this.notes = notes;
-    }
-
-    public Log() {
     }
 }

@@ -67,4 +67,16 @@ public class Account {
 
     public Account() {
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountID='" + accountID + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }
