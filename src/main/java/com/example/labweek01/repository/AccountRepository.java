@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.sql.*;
+import java.util.List;
 
 public class AccountRepository extends GenericCRUD<Account> {
 //    private static final String JDBC_URL = "jdbc:mariadb://localhost:3306/mydb";
@@ -71,4 +72,23 @@ public Account findAccountByIDAndPassword(String id,String pass) {
     }
     return null;
 }
+
+
+    public List<Account> getAllAccount() {
+        Transaction tr=null;
+        try(Session session=sesssionFactory.openSession()){
+            tr=session.beginTransaction();
+
+            String sql = "SELECT * FROM account ;";
+            List<Account> account = session.createNativeQuery(sql, Account.class).getResultList();
+
+            tr.commit();
+            return account;
+        }catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            tr.rollback();
+        }
+        return null;
+    }
 }

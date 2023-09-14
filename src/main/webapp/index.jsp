@@ -17,8 +17,10 @@
     </div>
 
     <div>
-        <input type="submit" value="Đăng nhập">
+        <input type="hidden" name="action" value="login">
+        <input type="submit" value="login" >
     </div>
+
 </form>
 </body>
 </html>

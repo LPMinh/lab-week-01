@@ -70,7 +70,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addAccountForm">
+                <form id="addAccountForm" action="ControlServlet" method="post">
                     <div class="form-group">
                         <label for="id">ID</label>
                         <input type="text" class="form-control" id="id" name="id">
@@ -98,11 +98,13 @@
                             <option value="Khóa">Khóa</option>
                         </select>
                     </div>
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <input type="submit" class="btn btn-primary" id="saveButton" >Lưu</input>
+                    <input type="hidden" name="action" value="saveAccount">
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" id="saveButton" onclick="saveAccount()">Lưu</button>
+
             </div>
         </div>
     </div>
