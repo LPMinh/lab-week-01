@@ -22,14 +22,14 @@ public class ControlServlet extends HttpServlet {
         String id = req.getParameter("id");
         String password = req.getParameter("password");
         accountRepository = new AccountRepository();
-        Account account = accountRepository.findAccountByIdAndPassword(id, password);
+        Account account = accountRepository.findAccountByIDAndPassword(id,password);
         PrintWriter writer = resp.getWriter();
         if (account == null) {
             writer.println("Khong tim thay");
         } else {
             grantRepository = new GrantRepository();
-            if (grantRepository.findRoleByAccountId(id).equals("user")) {
-                writer.println(account);
+            if (grantRepository.isRole("user",account.getAccountID())) {
+                resp.sendRedirect("dashboard.html");
             } else {
 
             }
@@ -40,4 +40,6 @@ public class ControlServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
+
 }
+

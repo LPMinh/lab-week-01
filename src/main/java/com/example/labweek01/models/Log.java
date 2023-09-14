@@ -1,23 +1,40 @@
 package com.example.labweek01.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "log")
 public class Log {
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
     private Account accountID;
+    @Column(name = "login_time")
+
     private String loginTime;
+    @Column(name = "notes")
     private String notes;
 
-    public Log(String id, Account accountID, String loginTime, String notes) {
+    public Log(long id, Account accountID, String loginTime, String notes) {
         this.id = id;
         this.accountID = accountID;
         this.loginTime = loginTime;
         this.notes = notes;
     }
 
-    public String getId() {
+    public Log() {
+
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

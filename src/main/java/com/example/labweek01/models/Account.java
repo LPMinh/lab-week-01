@@ -1,11 +1,25 @@
 package com.example.labweek01.models;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "account" )
 public class Account {
+    @Id
+    @Column(name = "account_id",columnDefinition = "varchar(50)")
     private String accountID;
+    @Column(name = "full_name")
     private String name;
+    @Column(name = "password")
     private String password;
+    @Column(name = "email")
     private String email;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "status")
     private boolean status;
 
     public String getAccountID() {

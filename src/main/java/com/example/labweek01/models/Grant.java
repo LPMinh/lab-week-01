@@ -1,24 +1,40 @@
 package com.example.labweek01.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "grant_access")
 public class Grant {
-    private String role_id;
+    @Id
+    @ManyToOne
+    @JoinColumn(name="role_id",columnDefinition = "varchar(50)")
+    private Role role;
+    @Id
+    @ManyToOne
+    @JoinColumn(name="account_id",columnDefinition = "varchar(50)")
     private Account account;
+    @Column(name = "is_grant")
     private boolean isGrant;
     private String note;
 
-    public Grant(String role_id, Account account, boolean isGrant, String note) {
-        this.role_id = role_id;
+
+    public Grant(Role role, Account account, boolean isGrant, String note) {
+        this.role = role;
         this.account = account;
         this.isGrant = isGrant;
         this.note = note;
     }
 
-    public String getRole_id() {
-        return role_id;
+    public Grant() {
+
     }
 
-    public void setRole_id(String role_id) {
-        this.role_id = role_id;
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Account getAccount() {

@@ -1,8 +1,14 @@
 package com.example.labweek01.repository;
 
-import java.sql.*;
+import com.example.labweek01.models.Account;
+import com.example.labweek01.models.Grant;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-public class GrantRepository {
+import java.sql.*;
+import java.util.List;
+
+public class GrantRepository  extends  GenericCRUD<Grant>{
     private static final String JDBC_URL = "jdbc:mariadb://localhost:3306/mydb";
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "sapassword";
@@ -20,24 +26,33 @@ public class GrantRepository {
         }
         return connection;
     }
+    public List<Grant> getListGrantByID(String id){
+        Transaction tr=null;
+        try(Session session=sesssionFactory.openSession()){
+            tr=session.beginTransaction();
 
-    public String findRoleByAccountId(String accountId) {
-        String role = null;
-        String sql = "SELECT role_id FROM grant_access WHERE account_id = ?";
-        Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, accountId);
+            String sql = "SELECT * FROM grant_access WHERE account_id=:id ;";
+            List<Grant> list = session.createNativeQuery(sql, Grant.class)
+                    .setParameter("id", id).getResultList();
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    role = rs.getString("role_id");
-                }
-            }
-        } catch (SQLException e) {
+            tr.commit();
+            return list;
+        }catch (Exception e) {
+            // TODO: handle exception
             e.printStackTrace();
+            tr.rollback();
         }
-
-        return role;
+        return null;
+    }
+    public boolean isRole(String role,String id) {
+       List<Grant> grants= getListGrantByID(id);
+        for ( Grant grant:
+             grants) {
+            if(grant.getRole().getRoleID().equalsIgnoreCase(role)){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

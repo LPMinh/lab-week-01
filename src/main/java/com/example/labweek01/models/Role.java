@@ -1,9 +1,18 @@
 package com.example.labweek01.models;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "role")
 public class Role {
+    @Id
+    @Column(name = "role_id",columnDefinition = "varchar(50)")
     private String roleID;
+    @Column(name = "role_name")
     private String roleName;
+    @Column(name = "description")
     private String description;
+    @Column(name = "status")
     private String status;
 
     public Role(String roleID, String roleName, String description, String status) {

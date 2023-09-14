@@ -26,6 +26,10 @@ dependencies {
     implementation 'org.mariadb.jdbc:mariadb-java-client:3.2.0'
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation("org.hibernate:hibernate-core:6.3.0.Final")
+
+
+
 }
 
 test {

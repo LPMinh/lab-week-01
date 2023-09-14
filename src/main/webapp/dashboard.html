@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Thư viện jQuery (được sử dụng bởi Bootstrap) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Thư viện Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Quản Lý Tài Khoản</title>
+</head>
+<body>
+<div class="container">
+    <h1>Quản Lý Tài Khoản</h1>
+    <button id="addButton" data-toggle="modal" data-target="#addModal">Thêm</button>
+    <button id="editButton">Sửa</button>
+    <button id="deleteButton">Xóa</button>
+    <button id="updateButton">Cập Nhật</button>
+    <table id="accountTable">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Email</th>
+        <th>Điện Thoại</th>
+        <th>Trạng Thái</th>
+        <th>Xóa</th> <!-- Thêm cột mới cho nút xóa -->
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>1</td>
+        <td>John Doe</td>
+        <td>john@example.com</td>
+        <td>123-456-7890</td>
+        <td class="status">Hoạt động</td>
+        <td><button class="deleteButton">Xóa</button></td> <!-- Thêm nút xóa vào cột mới -->
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Jane Smith</td>
+        <td>jane@example.com</td>
+        <td>987-654-3210</td>
+        <td class="status locked">Khóa</td>
+        <td><button class="deleteButton">Xóa</button></td> <!-- Thêm nút xóa vào cột mới -->
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Alice Johnson</td>
+        <td>alice@example.com</td>
+        <td>555-555-5555</td>
+        <td class="status">Hoạt động</td>
+        <td><button class="deleteButton">Xóa</button></td> <!-- Thêm nút xóa vào cột mới -->
+      </tr>
+      <!-- Thêm các dòng khác tương tự cho các ví dụ khác -->
+      </tbody>
+    </table>
+</div>
+<!-- Modal thêm -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Thêm Tài Khoản</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addAccountForm">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" class="form-control" id="id" name="id">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Tên</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Điện Thoại</label>
+                        <input type="tel" class="form-control" id="phone" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Trạng Thái</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="Hoạt động">Hoạt động</option>
+                            <option value="Khóa">Khóa</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="saveButton" onclick="saveAccount()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
