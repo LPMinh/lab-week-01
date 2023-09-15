@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a34d10e0-4fb9-4c59-8d76-e03d536ddcd0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/labweek01/repository/RoleRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/labweek01/controllers/AccountServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/labweek01/controllers/AccountServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/labweek01/controllers/ControlServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/labweek01/controllers/ControlServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/labweek01/models/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/labweek01/models/Account.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/labweek01/repository/AccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/labweek01/repository/AccountRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -315,6 +314,7 @@
       <workItem from="1694241960819" duration="4001000" />
       <workItem from="1694667872595" duration="17463000" />
       <workItem from="1694703546283" duration="18452000" />
+      <workItem from="1694756058523" duration="15093000" />
     </task>
     <task id="LOCAL-00001" summary="commit lan dau">
       <option name="closed" value="true" />

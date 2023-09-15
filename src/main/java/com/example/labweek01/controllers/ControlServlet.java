@@ -1,8 +1,10 @@
 package com.example.labweek01.controllers;
 
 import com.example.labweek01.models.Account;
+import com.example.labweek01.models.Role;
 import com.example.labweek01.repository.AccountRepository;
 import com.example.labweek01.repository.GrantRepository;
+import com.example.labweek01.repository.RoleRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import jakarta.servlet.RequestDispatcher;
@@ -11,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import javax.swing.*;
 import java.io.BufferedReader;
@@ -24,6 +27,9 @@ public class ControlServlet extends HttpServlet {
     AccountRepository accountRepository;
     GrantRepository grantRepository;
 
+    RoleRepository roleRepository;
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -33,13 +39,16 @@ public class ControlServlet extends HttpServlet {
             String password = req.getParameter("password");
             accountRepository = new AccountRepository();
             Account account = accountRepository.findAccountByIDAndPassword(id, password);
-            PrintWriter writer = resp.getWriter();
+
             if (account == null) {
+                PrintWriter writer = resp.getWriter();
                 writer.println("Khong tim thay");
             } else {
                 grantRepository = new GrantRepository();
-                if (grantRepository.isRole("user", account.getAccountID())) {
+                if (grantRepository.isRole("admin", account.getAccountID())) {
                     resp.sendRedirect("dashboard.html");
+                    HttpSession session= req.getSession();
+                    session.setAttribute("info",account);
                 } else {
 
                 }
@@ -48,8 +57,27 @@ public class ControlServlet extends HttpServlet {
             List<Account> accounts=accountRepository.getAllAccount();
             Gson gson = new Gson();
             String json = gson.toJson(accounts);
-            System.out.println(json);
+
             PrintWriter out = resp.getWriter();
+            out.print(json);
+            out.flush();
+        }else if(action.equalsIgnoreCase("info")){
+            HttpSession httpSession=req.getSession();
+            Account account= (Account) httpSession.getAttribute("info");
+            System.out.println(account);
+            Gson gson=new Gson();
+            String json=gson.toJson(account);
+            PrintWriter out=resp.getWriter();
+            out.print(json);
+            out.flush();
+        }else if(action.equalsIgnoreCase("getRole")){
+            roleRepository=new RoleRepository();
+            HttpSession session= req.getSession();;
+            Account acc=(Account) session.getAttribute("info");
+            List<Role> roles=roleRepository.findRolesByIDAcc(acc.getAccountID()).get();
+            Gson gson=new Gson();
+            String json=gson.toJson(roles);
+            PrintWriter out=resp.getWriter();
             out.print(json);
             out.flush();
         }
@@ -86,10 +114,14 @@ public class ControlServlet extends HttpServlet {
         String action = req.getParameter("action").toString();
         String id=req.getParameter("id").toString();
         System.out.println(action);
+        System.out.println(id);
         accountRepository=new AccountRepository();
         Account acc=new Account();
         acc.setAccountID(id);
         if(accountRepository.removeObject(acc)){
+            resp.setStatus(HttpServletResponse.SC_ACCEPTED);
+
+        }else{
             resp.sendRedirect("dashboard.html");
         }
     }

@@ -57,7 +57,8 @@ public Account findAccountByIDAndPassword(String id,String pass) {
     Transaction tr=null;
     try(Session session=sesssionFactory.openSession()){
         tr=session.beginTransaction();
-
+        System.out.println(id);
+        System.out.println(pass);
         String sql = "SELECT * FROM account WHERE account_id = :id AND password = :pass";
         Account account = session.createNativeQuery(sql, Account.class)
                 .setParameter("id", id)
@@ -69,8 +70,9 @@ public Account findAccountByIDAndPassword(String id,String pass) {
         // TODO: handle exception
         e.printStackTrace();
         tr.rollback();
+        return  null;
     }
-    return null;
+
 }
 
 

@@ -1,9 +1,10 @@
 package com.example.labweek01.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.mariadb.jdbc.type.LineString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "account" )
@@ -21,6 +22,7 @@ public class Account {
     private String phone;
     @Column(name = "status")
     private boolean status;
+
 
     public String getAccountID() {
         return accountID;
@@ -69,6 +71,9 @@ public class Account {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+
+
 
     public Account(String accountID, String name, String password, String email, String phone, boolean status) {
         this.accountID = accountID;
