@@ -5,6 +5,7 @@ import com.example.labweek01.models.Role;
 import com.example.labweek01.repository.AccountRepository;
 import com.example.labweek01.repository.GrantRepository;
 import com.example.labweek01.repository.RoleRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import jakarta.servlet.RequestDispatcher;
@@ -21,43 +22,47 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/ControlServlet")
-
+@WebServlet(name = "ControlServlet", value = "/ControlServlet")
 public class ControlServlet extends HttpServlet {
     AccountRepository accountRepository;
     GrantRepository grantRepository;
 
     RoleRepository roleRepository;
-
-
+    ObjectMapper objectMapper=new ObjectMapper();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        accountRepository = new AccountRepository();
         String action = req.getParameter("action").toString();
         if (action.equalsIgnoreCase("login")) {
             String id=req.getParameter("id");
             String password = req.getParameter("password");
-            accountRepository = new AccountRepository();
-            Account account = accountRepository.findAccountByIDAndPassword(id, password);
 
+            Account account = accountRepository.findAccountByIDAndPassword(id, password);
             if (account == null) {
                 PrintWriter writer = resp.getWriter();
                 writer.println("Khong tim thay");
             } else {
+                HttpSession httpSession = req.getSession();
+                httpSession.setAttribute("info", account);
                 grantRepository = new GrantRepository();
                 if (grantRepository.isRole("admin", account.getAccountID())) {
-                    resp.sendRedirect("dashboard.html");
-                    HttpSession session= req.getSession();
-                    session.setAttribute("info",account);
+                    req.setAttribute("info", account);
+                    List<Account> accounts=accountRepository.getAllAccount();
+                    req.setAttribute("accounts",accounts);
+                    req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
+
                 } else {
+                    resp.sendRedirect("user.jsp");
 
                 }
             }
         }else if(action.equalsIgnoreCase("all")){
+            System.out.println(action);
             List<Account> accounts=accountRepository.getAllAccount();
-            Gson gson = new Gson();
-            String json = gson.toJson(accounts);
-
+//            Gson gson = new Gson();
+//            String json = gson.toJson(accounts);
+            String json=objectMapper.writeValueAsString(accounts);
+            System.out.println(json);
             PrintWriter out = resp.getWriter();
             out.print(json);
             out.flush();
@@ -71,12 +76,30 @@ public class ControlServlet extends HttpServlet {
             out.print(json);
             out.flush();
         }else if(action.equalsIgnoreCase("getRole")){
+
             roleRepository=new RoleRepository();
             HttpSession session= req.getSession();;
             Account acc=(Account) session.getAttribute("info");
             List<Role> roles=roleRepository.findRolesByIDAcc(acc.getAccountID()).get();
             Gson gson=new Gson();
             String json=gson.toJson(roles);
+            PrintWriter out=resp.getWriter();
+            out.print(json);
+            out.flush();
+        }else if(action.equalsIgnoreCase("admin")){
+            System.out.println(action);
+            List<Account> accounts=accountRepository.getAccountByRoleID("admin");
+            Gson gson = new Gson();
+            String json = gson.toJson(accounts);
+
+            PrintWriter out = resp.getWriter();
+            out.print(json);
+            out.flush();
+        }else if(action.equalsIgnoreCase("user")){
+            System.out.println(action);
+            List<Account> accounts=accountRepository.getAccountByRoleID("user");
+            Gson gson=new Gson();
+            String json=gson.toJson(accounts);
             PrintWriter out=resp.getWriter();
             out.print(json);
             out.flush();
@@ -113,8 +136,6 @@ public class ControlServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action").toString();
         String id=req.getParameter("id").toString();
-        System.out.println(action);
-        System.out.println(id);
         accountRepository=new AccountRepository();
         Account acc=new Account();
         acc.setAccountID(id);

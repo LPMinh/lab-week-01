@@ -1,16 +1,19 @@
 package com.example.labweek01.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+
+import java.io.Serializable;
 
 @Entity
 @Table(name = "grant_access")
 public class Grant {
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="role_id",columnDefinition = "varchar(50)")
     private Role role;
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="account_id",columnDefinition = "varchar(50)")
     private Account account;
     @Column(name = "is_grant")

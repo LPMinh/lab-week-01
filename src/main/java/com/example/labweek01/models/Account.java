@@ -3,12 +3,13 @@ package com.example.labweek01.models;
 import jakarta.persistence.*;
 import org.mariadb.jdbc.type.LineString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "account" )
-public class Account {
+public class Account implements Serializable {
     @Id
     @Column(name = "account_id",columnDefinition = "varchar(50)")
     private String accountID;
@@ -22,7 +23,26 @@ public class Account {
     private String phone;
     @Column(name = "status")
     private boolean status;
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,targetEntity = Grant.class ,orphanRemoval = true,mappedBy = "account")
+    private List<Grant> grants=new ArrayList<>();
 
+    public List<Grant> getGrants() {
+        return grants;
+    }
+
+    public void setGrants(List<Grant> grants) {
+        this.grants = grants;
+    }
+    public String getRole(){
+        String role="";
+        for (Grant grant:grants
+             ) {
+            role+=grant.getRole().getRoleName()+" ";
+        }
+        return role;
+    }
+    //    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,targetEntity = Grant.class ,orphanRemoval = true,mappedBy = "account")
+//    private List<Grant> grants=new ArrayList<>();
 
     public String getAccountID() {
         return accountID;
@@ -75,6 +95,7 @@ public class Account {
 
 
 
+
     public Account(String accountID, String name, String password, String email, String phone, boolean status) {
         this.accountID = accountID;
         this.name = name;
@@ -82,10 +103,29 @@ public class Account {
         this.email = email;
         this.phone = phone;
         this.status = status;
+        this.grants= new ArrayList<>();
     }
 
     public Account() {
     }
+
+//    public List<Grant> getGrants() {
+//        return grants;
+//    }
+
+//    public Account(String accountID, String name, String password, String email, String phone, boolean status, List<Grant> grants) {
+//        this.accountID = accountID;
+//        this.name = name;
+//        this.password = password;
+//        this.email = email;
+//        this.phone = phone;
+//        this.status = status;
+//        this.grants = grants;
+//    }
+
+//    public void setGrants(List<Grant> grants) {
+//        this.grants = grants;
+//    }
 
     @Override
     public String toString() {

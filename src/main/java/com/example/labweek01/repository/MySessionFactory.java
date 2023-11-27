@@ -22,7 +22,7 @@ public class MySessionFactory {
 
 			// Cấu hình kết nối cơ sở dữ liệu
 			configuration.setProperty("hibernate.connection.driver_class", "org.mariadb.jdbc.Driver");
-			configuration.setProperty("hibernate.connection.url", "jdbc:mariadb://localhost:3306/mydb");
+			configuration.setProperty("hibernate.connection.url", "jdbc:mariadb://localhost:3306/week01");
 			configuration.setProperty("hibernate.connection.username", "root");
 			configuration.setProperty("hibernate.connection.password", "12345678");
 

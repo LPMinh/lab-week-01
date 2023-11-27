@@ -2,9 +2,11 @@ package com.example.labweek01.models;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "role")
-public class Role {
+public class Role implements Serializable {
     @Id
     @Column(name = "role_id",columnDefinition = "varchar(50)")
     private String roleID;
@@ -23,6 +25,10 @@ public class Role {
     }
 
     public Role() {
+    }
+
+    public Role(String role) {
+        this.roleID=role;
     }
 
     public String getRoleID() {
@@ -55,5 +61,15 @@ public class Role {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleID='" + roleID + '\'' +
+                ", roleName='" + roleName + '\'' +
+                ", description='" + description + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

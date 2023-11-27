@@ -28,6 +28,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation("org.hibernate:hibernate-core:6.3.0.Final")
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2")
 
 
 

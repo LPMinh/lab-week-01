@@ -19,23 +19,34 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "AccountServlet", value = "/AccountServlet")
-public class AccountServlet extends HttpServlet {
+@WebServlet(name = "SearchServlet", value = "/SearchServlet")
+public class SearchServlet extends HttpServlet {
 
     private AccountRepository accountRepository;
 
-    public AccountServlet() {
+    public SearchServlet() {
         accountRepository = new AccountRepository();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String filter=req.getParameter("filter");
+        if(filter.equals("all")){
+            List<Account> accounts=accountRepository.getAllAccount();
+            req.setAttribute("accounts",accounts);
+        }else if(filter.equals("admin")){
+            List<Account> accounts=accountRepository.getAccountByRoleID("admin");
+            req.setAttribute("accounts",accounts);
+        }else if(filter.equals("user")){
+            List<Account> accounts=accountRepository.getAccountByRoleID("user");
+            req.setAttribute("accounts",accounts);
+
+        }
         HttpSession httpSession=req.getSession();
         Account account=(Account) httpSession.getAttribute("info");
-        List<Account> accounts=accountRepository.getAllAccount();
-        req.setAttribute("accounts",accounts);
         req.setAttribute("info",account);
         req.getRequestDispatcher("dashboard.jsp").forward(req,resp);
+
 
     }
 
@@ -43,8 +54,8 @@ public class AccountServlet extends HttpServlet {
     @Override
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-     String name=req.getParameter("name");
-     String email=req.getParameter("email");
+        String name=req.getParameter("name");
+        String email=req.getParameter("email");
         String phone=req.getParameter("phone");
         String password=req.getParameter("password");
         String id=req.getParameter("id");

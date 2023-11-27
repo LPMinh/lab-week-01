@@ -34,4 +34,16 @@ public class RoleRepository extends  GenericCRUD<Role> {
         }
 
     }
+
+    public Role findRoleByID(String id){
+        Transaction tr=null;
+        try(Session session=sesssionFactory.openSession()){
+            tr=session.beginTransaction();
+            Role role=session.get(Role.class,id);
+            tr.commit();
+            return role;
+        }catch (Exception e) {
+}
+        return null;
+    }
 }

@@ -55,4 +55,18 @@ public class GrantRepository  extends  GenericCRUD<Grant>{
         return false;
     }
 
+    public boolean addRole(String role,String id) {
+        Transaction tr = null;
+        try (Session session = sesssionFactory.openSession()) {
+            tr = session.beginTransaction();
+            String sql = "INSERT INTO grant_access (account_id, role_id) VALUES (?, ?);";
+            session.createNativeQuery(sql, Grant.class).setParameter(1, id).setParameter(2, role);
+
+            tr.commit();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }
